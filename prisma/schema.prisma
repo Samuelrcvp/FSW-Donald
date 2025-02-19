@@ -30,7 +30,7 @@ model Restaurant {
 model MenuCategory {
   id           String     @id @default(uuid())
   name         String
-  restaurant   Restaurant @relation(fields: [restaurantId], references: [id])
+  restaurant   Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
   restaurantId String
   products     Product[]
   createdAt    DateTime   @default(now())
@@ -40,12 +40,12 @@ model MenuCategory {
 model Product {
   id             String         @id @default(uuid())
   name           String
-  decription     String
+  description     String
   price          Float
   imageUrl       String
   ingredients    String[]
   orderProducts  OrderProduct[]
-  restaurant     Restaurant     @relation(fields: [restaurantId], references: [id])
+  restaurant     Restaurant     @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
   restaurantId   String
   menuCategory   MenuCategory   @relation(fields: [menuCategoryId], references: [id])
   menuCategoryId String
@@ -58,7 +58,7 @@ model Order {
   total             Float
   status            OrderStatus
   consumptionMethod ConsumptionMethod
-  restaurant        Restaurant        @relation(fields: [restaurantId], references: [id])
+  restaurant        Restaurant        @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
   restaurantId      String
   orderProduts      OrderProduct[]
   createdAt         DateTime          @default(now())
@@ -69,7 +69,7 @@ model OrderProduct {
   id        String   @id @default(uuid())
   product   Product  @relation(fields: [productId], references: [id])
   productId String
-  order     Order    @relation(fields: [orderId], references: [id])
+  order     Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
   orderId   Int
   price     Float
   createdAt DateTime @default(now())
